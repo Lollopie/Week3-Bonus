@@ -1,0 +1,111 @@
+let room = "server";
+let hasFragment = false;
+let hasCode = false;
+let hasKey = false;
+let attempts = 0;
+let playing = true;
+
+function ask(message) {
+  const answer = prompt(message);
+  return answer === null ? "quit" : answer.trim().toLowerCase();
+}
+
+alert(
+  "THE CLOUD SERVER\n\n" +
+  "Open your browser console (F12) to read the story.\n" +
+  "Type your choices in the pop-up boxes.\n" +
+  "Click OK to begin."
+);
+
+console.log("You are trapped inside a mainframe. Find the decryption key and reach the terminal to escape.");
+console.log("Rooms: server, firewall, archive");
+
+while (playing) {
+  if (room === "server") {
+    console.log("\n--- SERVER ROOM ---");
+    console.log("Options: search, firewall, archive, terminal, quit");
+    const choice = ask("What do you do?");
+
+    if (choice === "search" && !hasFragment) {
+      hasFragment = true;
+      console.log("You find an ACCESS FRAGMENT.");
+    } else if (choice === "firewall" || choice === "archive") {
+      room = choice;
+    } else if (choice === "terminal") {
+      if (!hasKey) {
+        console.log("You need a decryption key first.");
+      } else {
+        const key = ask("Enter the decryption key:");
+        if (key === "decryption key") {
+          alert("You escaped the system!");
+          playing = false;
+        } else {
+          attempts++;
+          console.log(`Wrong key. Attempts left: ${3 - attempts}`);
+          if (attempts >= 3) {
+            alert("Too many failed attempts. You were deleted.");
+            playing = false;
+          }
+        }
+      }
+    } else if (choice === "quit") {
+      alert("Disconnected safely.");
+      playing = false;
+    } else {
+      console.log("Nothing happens.");
+    }
+
+  } else if (room === "firewall") {
+    console.log("\n--- FIREWALL CHAMBER ---");
+
+    if (!hasFragment) {
+      console.log("Blocked by red light. You need an access fragment.");
+      room = "server";
+    } else {
+      console.log("A daemon asks: 'I have keys but no locks, space but no room. What am I?'");
+      console.log("Options: answer, server, archive, quit");
+      const choice = ask("What do you do?");
+
+      if (choice === "answer") {
+        const guess = ask("Your answer:");
+        if (guess === "keyboard") {
+          hasCode = true;
+          console.log("Correct! You get a BYPASS CODE.");
+        } else {
+          console.log("Wrong. Try again.");
+        }
+      } else if (choice === "server" || choice === "archive") {
+        room = choice;
+      } else if (choice === "quit") {
+        alert("Disconnected safely.");
+        playing = false;
+      } else {
+        console.log("Nothing happens.");
+      }
+    }
+
+  } else if (room === "archive") {
+    console.log("\n--- BACKUP ARCHIVE ---");
+
+    if (!hasCode) {
+      console.log("Vault is locked. You need a bypass code.");
+      console.log("Options: firewall, server, quit");
+    } else {
+      console.log("Vault is open.");
+      console.log("Options: search, firewall, server, quit");
+    }
+    const choice = ask("What do you do?");
+
+    if (choice === "search" && hasCode && !hasKey) {
+      hasKey = true;
+      console.log("You find the DECRYPTION KEY!");
+    } else if (choice === "firewall" || choice === "server") {
+      room = choice;
+    } else if (choice === "quit") {
+      alert("Disconnected safely.");
+      playing = false;
+    } else {
+      console.log("Nothing happens.");
+    }
+  }
+}
