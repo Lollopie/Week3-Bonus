@@ -14,10 +14,12 @@ alert(
   "THE CLOUD SERVER\n\n" +
   "Open your browser console (F12) to read the story.\n" +
   "Type your choices in the pop-up boxes.\n" +
+  "Type 'help' anytime to see your goal again.\n" +
   "Click OK to begin."
 );
 
-console.log("You are trapped inside a mainframe. Find the decryption key and reach the terminal to escape.");
+console.log("You are trapped inside a mainframe.");
+console.log("GOAL: find an ACCESS FRAGMENT, use it to get a BYPASS CODE, use that to find the DECRYPTION KEY, then reach the terminal to escape.");
 console.log("Rooms: server, firewall, archive");
 
 while (playing) {
