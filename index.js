@@ -25,8 +25,7 @@ console.log("Rooms: server, firewall, archive");
 while (playing) {
   if (room === "server") {
     console.log("\n--- SERVER ROOM ---");
-    console.log("Options: search, firewall, archive, terminal, quit");
-    const choice = ask("What do you do?");
+    const choice = ask("What do you do? (search, firewall, archive, terminal, help, quit)");
 
     if (choice === "search" && !hasFragment) {
       hasFragment = true;
@@ -53,6 +52,9 @@ while (playing) {
     } else if (choice === "quit") {
       alert("Disconnected safely.");
       playing = false;
+    } else if (choice === "help") {                     // ADDED
+      console.log("GOAL: access fragment → bypass code → decryption key → terminal.");
+      console.log(`You currently have: ${[hasFragment && "access fragment", hasCode && "bypass code", hasKey && "decryption key"].filter(Boolean).join(", ") || "nothing yet"}`);
     } else {
       console.log("Nothing happens.");
     }
@@ -65,8 +67,7 @@ while (playing) {
       room = "server";
     } else {
       console.log("A daemon asks: 'I have keys but no locks, space but no room. What am I?'");
-      console.log("Options: answer, server, archive, quit");
-      const choice = ask("What do you do?");
+      const choice = ask("What do you do? (answer, server, archive, help, quit)");
 
       if (choice === "answer") {
         const guess = ask("Your answer:");
@@ -81,6 +82,9 @@ while (playing) {
       } else if (choice === "quit") {
         alert("Disconnected safely.");
         playing = false;
+      } else if (choice === "help") {                    // ADDED
+        console.log("GOAL: access fragment → bypass code → decryption key → terminal.");
+        console.log(`You currently have: ${[hasFragment && "access fragment", hasCode && "bypass code", hasKey && "decryption key"].filter(Boolean).join(", ") || "nothing yet"}`);
       } else {
         console.log("Nothing happens.");
       }
@@ -89,14 +93,11 @@ while (playing) {
   } else if (room === "archive") {
     console.log("\n--- BACKUP ARCHIVE ---");
 
-    if (!hasCode) {
-      console.log("Vault is locked. You need a bypass code.");
-      console.log("Options: firewall, server, quit");
-    } else {
-      console.log("Vault is open.");
-      console.log("Options: search, firewall, server, quit");
-    }
-    const choice = ask("What do you do?");
+    const options = hasCode
+      ? "search, firewall, server, help, quit"
+      : "firewall, server, help, quit";
+    console.log(hasCode ? "Vault is open." : "Vault is locked. You need a bypass code.");
+    const choice = ask(`What do you do? (${options})`);
 
     if (choice === "search" && hasCode && !hasKey) {
       hasKey = true;
@@ -106,6 +107,9 @@ while (playing) {
     } else if (choice === "quit") {
       alert("Disconnected safely.");
       playing = false;
+    } else if (choice === "help") {                      // ADDED
+      console.log("GOAL: access fragment → bypass code → decryption key → terminal.");
+      console.log(`You currently have: ${[hasFragment && "access fragment", hasCode && "bypass code", hasKey && "decryption key"].filter(Boolean).join(", ") || "nothing yet"}`);
     } else {
       console.log("Nothing happens.");
     }
