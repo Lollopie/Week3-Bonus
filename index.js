@@ -12,7 +12,8 @@ function ask(message) {
 
 alert(
   "THE CLOUD SERVER\n\n" +
-  "Open your browser console (F12) to read the story.\n" +
+  "GOAL: find an ACCESS FRAGMENT, trade it for a BYPASS CODE, use that to get the DECRYPTION KEY, then reach the terminal to escape.\n\n" +
+  "Open DevTools (F12), then click the 'Console' tab at the bottom, to read the story as you play.\n" +
   "Type your choices in the pop-up boxes.\n" +
   "Type 'help' anytime to see your goal again.\n" +
   "Click OK to begin."
@@ -52,7 +53,7 @@ while (playing) {
     } else if (choice === "quit") {
       alert("Disconnected safely.");
       playing = false;
-    } else if (choice === "help") {                     // ADDED
+    } else if (choice === "help") {
       console.log("GOAL: access fragment → bypass code → decryption key → terminal.");
       console.log(`You currently have: ${[hasFragment && "access fragment", hasCode && "bypass code", hasKey && "decryption key"].filter(Boolean).join(", ") || "nothing yet"}`);
     } else {
@@ -82,7 +83,7 @@ while (playing) {
       } else if (choice === "quit") {
         alert("Disconnected safely.");
         playing = false;
-      } else if (choice === "help") {                    // ADDED
+      } else if (choice === "help") {
         console.log("GOAL: access fragment → bypass code → decryption key → terminal.");
         console.log(`You currently have: ${[hasFragment && "access fragment", hasCode && "bypass code", hasKey && "decryption key"].filter(Boolean).join(", ") || "nothing yet"}`);
       } else {
@@ -107,11 +108,4 @@ while (playing) {
     } else if (choice === "quit") {
       alert("Disconnected safely.");
       playing = false;
-    } else if (choice === "help") {                      // ADDED
-      console.log("GOAL: access fragment → bypass code → decryption key → terminal.");
-      console.log(`You currently have: ${[hasFragment && "access fragment", hasCode && "bypass code", hasKey && "decryption key"].filter(Boolean).join(", ") || "nothing yet"}`);
-    } else {
-      console.log("Nothing happens.");
-    }
-  }
-}
+    } else if (choice ===
