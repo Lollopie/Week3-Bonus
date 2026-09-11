@@ -108,4 +108,11 @@ while (playing) {
     } else if (choice === "quit") {
       alert("Disconnected safely.");
       playing = false;
-    } else if (choice ===
+    } else if (choice === "help") {
+      console.log("GOAL: access fragment → bypass code → decryption key → terminal.");
+      console.log(`You currently have: ${[hasFragment && "access fragment", hasCode && "bypass code", hasKey && "decryption key"].filter(Boolean).join(", ") || "nothing yet"}`);
+    } else {
+      console.log("Nothing happens.");
+    }
+  }
+}
