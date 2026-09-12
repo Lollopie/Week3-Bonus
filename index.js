@@ -255,8 +255,6 @@ function serverRoom() {
 }
 
 
-// -------------------- FIREWALL ROOM --------------------
-
 function firewallRoom() {
   console.log("\n--- FIREWALL CHAMBER ---");
 
@@ -274,7 +272,6 @@ function firewallRoom() {
       "You need an ACCESS FRAGMENT. Maybe search the Server Room."
     );
 
-    // Being turned away isn't a real "move" - don't let ARIA get closer for it.
     currentRoom = "server";
     return;
   }
@@ -339,9 +336,6 @@ function firewallRoom() {
       );
   }
 }
-
-
-// -------------------- FIREWALL RIDDLE --------------------
 
 function answerRiddle() {
   if (hasCode) {
@@ -542,7 +536,6 @@ function archiveRoom() {
     }
   }
 
-  // Vault is still locked
   else {
     switch (choice) {
       case "server":
@@ -579,9 +572,6 @@ function archiveRoom() {
     }
   }
 }
-
-
-// -------------------- TERMINAL --------------------
 
 function tryTerminal() {
   console.log("\n--- ESCAPE TERMINAL ---");
@@ -659,8 +649,6 @@ function tryTerminal() {
 }
 
 function gameLoop() {
-  // These reassignments reset the game state on every playthrough -
-  // the top-of-file values above are only used for the very first call.
   hasFragment = false;
   hasLogClue = false;
   hasCode = false;
