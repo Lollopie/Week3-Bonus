@@ -7,7 +7,7 @@ let villainDistance = 0;
 let currentRoom = "server";
 let gameRunning = true;
 let ending = "";
-const CATCH_THRESHOLD = 5;
+const CATCH_THRESHOLD = 8;
 let cycleCount = Math.floor(Math.random() * 10) + 1;
 let decryptionKey = "alpha" + (Math.floor(Math.random() * 1000) + 1);
 
@@ -33,17 +33,24 @@ function travelTo(targetRoomName) {
     `ARIA's tracking signal pulses... (proximity: ${villainDistance}/${CATCH_THRESHOLD})`
   );
 
+  let flavorText = "";
+
   if (villainDistance === 2) {
-    console.log(
-      "You hear a low hum, like something moving through the vents."
-    );
+    flavorText = "You hear a low hum, like something moving through the vents.";
   } else if (villainDistance === 3) {
-    console.log(
-      "The lights flicker red. It's getting closer."
-    );
+    flavorText = "The lights flicker red. It's getting closer.";
   } else if (villainDistance === 4) {
-    console.log(
-      "Footsteps. Heavy ones. Right behind the walls now."
+    flavorText = "Footsteps. Heavy ones. Right behind the walls now.";
+  }
+
+  if (flavorText !== "") {
+    console.log(flavorText);
+  }
+
+  if (villainDistance < CATCH_THRESHOLD) {
+    alert(
+      `ARIA proximity: ${villainDistance}/${CATCH_THRESHOLD}` +
+      (flavorText !== "" ? `\n\n${flavorText}` : "")
     );
   }
 
@@ -85,14 +92,22 @@ function showHelp() {
     inventory.push("DECRYPTION KEY: " + decryptionKey);
   }
 
+  const inventoryText = inventory.length > 0
+    ? inventory.join(", ")
+    : "nothing yet";
+
   console.log(
-    "You currently have: " +
-    (inventory.length > 0
-      ? inventory.join(", ")
-      : "nothing yet")
+    "You currently have: " + inventoryText
   );
 
   console.log(
+    `ARIA proximity: ${villainDistance}/${CATCH_THRESHOLD}`
+  );
+
+  alert(
+    "HELP\n\n" +
+    "GOAL: access fragment -> bypass code -> decryption key -> terminal.\n\n" +
+    "You currently have: " + inventoryText + "\n\n" +
     `ARIA proximity: ${villainDistance}/${CATCH_THRESHOLD}`
   );
 }
@@ -145,11 +160,16 @@ function serverRoom() {
         );
 
         alert(
+          "You search behind one of the server racks.\n\n" +
           "You found an ACCESS FRAGMENT!\n\n" +
           "You can now access the Firewall Chamber."
         );
       } else {
         console.log(
+          "You search again, but there is nothing else here."
+        );
+
+        alert(
           "You search again, but there is nothing else here."
         );
       }
@@ -169,9 +189,18 @@ function serverRoom() {
         console.log(
           "Remember this number. The Firewall Chamber may need it."
         );
+
+        alert(
+          `A faint maintenance entry reads:\n\n"Cycles since boot: ${cycleCount}"\n\n` +
+          "Remember this number. The Firewall Chamber may need it."
+        );
       } else {
         console.log(
           `You already read this log. Cycles since boot: ${cycleCount}.`
+        );
+
+        alert(
+          `You already read this log.\n\nCycles since boot: ${cycleCount}.`
         );
       }
 
@@ -218,6 +247,10 @@ function serverRoom() {
       console.log(
         "Invalid choice. Please choose one of the available options."
       );
+
+      alert(
+        "Invalid choice. Please choose one of the available options."
+      );
   }
 }
 
@@ -236,6 +269,11 @@ function firewallRoom() {
       "You need an ACCESS FRAGMENT. Maybe search the Server Room."
     );
 
+    alert(
+      "A wall of red light blocks the entrance.\n\n" +
+      "You need an ACCESS FRAGMENT. Maybe search the Server Room."
+    );
+
     // Being turned away isn't a real "move" - don't let ARIA get closer for it.
     currentRoom = "server";
     return;
@@ -247,6 +285,7 @@ function firewallRoom() {
 
   const choice = ask(
     "FIREWALL CHAMBER\n\n" +
+    "A security daemon appears in front of you.\n\n" +
     "What do you do?\n\n" +
     "1. Answer the daemon's riddle\n" +
     "2. Return to the server room\n" +
@@ -294,6 +333,10 @@ function firewallRoom() {
       console.log(
         "Invalid choice. Nothing happens."
       );
+
+      alert(
+        "Invalid choice. Nothing happens."
+      );
   }
 }
 
@@ -307,6 +350,11 @@ function answerRiddle() {
     );
 
     console.log(
+      "It has nothing else to offer."
+    );
+
+    alert(
+      "The daemon already gave you the BYPASS CODE.\n\n" +
       "It has nothing else to offer."
     );
 
@@ -385,19 +433,15 @@ function answerRiddle() {
 function archiveRoom() {
   console.log("\n--- BACKUP ARCHIVE ---");
 
-  if (hasCode) {
-    console.log(
-      "The BYPASS CODE causes the vault's security barrier to disappear."
-    );
-  } else {
-    console.log(
-      "The archive vault is locked."
-    );
+  let intro;
 
-    console.log(
-      "You need a BYPASS CODE."
-    );
+  if (hasCode) {
+    intro = "The BYPASS CODE causes the vault's security barrier to disappear.";
+  } else {
+    intro = "The archive vault is locked. You need a BYPASS CODE.";
   }
+
+  console.log(intro);
 
   let options;
 
@@ -416,6 +460,7 @@ function archiveRoom() {
 
   const choice = ask(
     "BACKUP ARCHIVE\n\n" +
+    intro + "\n\n" +
     "What do you do?\n\n" +
     options
   );
@@ -444,6 +489,7 @@ function archiveRoom() {
           );
 
           alert(
+            "Inside the vault you find a glowing data chip.\n\n" +
             "You found the DECRYPTION KEY!\n\n" +
             `KEY: ${decryptionKey}\n\n` +
             "Return to the Server Room and use the terminal."
@@ -451,6 +497,11 @@ function archiveRoom() {
         } else {
           console.log(
             "The vault is empty. You already took the DECRYPTION KEY."
+          );
+
+          alert(
+            "The vault is empty. You already took the DECRYPTION KEY.\n\n" +
+            `KEY: ${decryptionKey}`
           );
         }
 
@@ -482,6 +533,10 @@ function archiveRoom() {
       default:
 
         console.log(
+          "Invalid choice. Nothing happens."
+        );
+
+        alert(
           "Invalid choice. Nothing happens."
         );
     }
@@ -517,6 +572,10 @@ function archiveRoom() {
         console.log(
           "Invalid choice. The vault remains locked."
         );
+
+        alert(
+          "Invalid choice. The vault remains locked."
+        );
     }
   }
 }
@@ -533,6 +592,11 @@ function tryTerminal() {
     );
 
     console.log(
+      "The terminal requires a DECRYPTION KEY."
+    );
+
+    alert(
+      "ACCESS DENIED.\n\n" +
       "The terminal requires a DECRYPTION KEY."
     );
 
@@ -587,6 +651,10 @@ function tryTerminal() {
 
     gameRunning = false;
     ending = "deleted";
+  } else {
+    alert(
+      `Wrong key.\n\nAttempts remaining: ${3 - attempts}`
+    );
   }
 }
 
@@ -615,7 +683,8 @@ function gameLoop() {
 
     "IMPORTANT:\n" +
     "Open DevTools by pressing F12 and select the Console tab.\n" +
-    "The console contains important story information and clues.\n\n" +
+    "The console contains some extra story flavor, but everything " +
+    "you need to play is shown in these pop-up boxes.\n\n" +
 
     "Type your choices into the pop-up boxes.\n" +
     "You can type 'help' to check your progress.\n\n" +
