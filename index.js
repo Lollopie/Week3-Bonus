@@ -1,14 +1,14 @@
-let hasFragment = false;
-let hasLogClue = false;
-let hasCode = false;
-let hasKey = false;
-let attempts = 0;
-let villainDistance = 0;
-let currentRoom = "server";
-let gameRunning = true;
+let hasFragment;
+let hasLogClue;
+let hasCode;
+let hasKey;
+let attempts;
+let villainDistance;
+let currentRoom;
+let gameRunning;
 const CATCH_THRESHOLD = 8;
-let cycleCount = Math.floor(Math.random() * 10) + 1;
-let decryptionKey = "alpha" + (Math.floor(Math.random() * 1000) + 1);
+let cycleCount;
+let decryptionKey;
 
 function ask(message) {
   const answer = prompt(message);
