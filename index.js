@@ -236,7 +236,8 @@ function firewallRoom() {
       "You need an ACCESS FRAGMENT. Maybe search the Server Room."
     );
 
-    travelTo("server");
+    // Being turned away isn't a real "move" - don't let ARIA get closer for it.
+    currentRoom = "server";
     return;
   }
 
@@ -579,6 +580,8 @@ function tryTerminal() {
 }
 
 function gameLoop() {
+  // These reassignments reset the game state on every playthrough -
+  // the top-of-file values above are only used for the very first call.
   hasFragment = false;
   hasLogClue = false;
   hasCode = false;
@@ -646,7 +649,7 @@ function startGame() {
 
   while (playAgain) {
     gameLoop();
-    
+
     playAgain = confirm(
       "Would you like to play again?"
     );
@@ -662,100 +665,3 @@ function startGame() {
 }
 
 startGame();
-
-
-
-// while (playing) {
-//   if (room === "server") {
-//     console.log("\n--- SERVER ROOM ---");
-//     const choice = ask("What do you do? (search, firewall, archive, terminal, help, quit)");
-
-//     if (choice === "search" && !hasFragment) {
-//       hasFragment = true;
-//       console.log("You find an ACCESS FRAGMENT.");
-//       alert("You found an ACCESS FRAGMENT! You can now access the firewall.");
-//     } else if (choice === "firewall" || choice === "archive") {
-//       room = choice;
-//     } else if (choice === "terminal") {
-//       if (!hasKey) {
-//         console.log("You need a decryption key first.");
-//       } else {
-//         const key = ask("Enter the decryption key:");
-//         if (key === "decryption key") {
-//           alert("You escaped the system!");
-//           playing = false;
-//         } else {
-//           attempts++;
-//           console.log(`Wrong key. Attempts left: ${3 - attempts}`);
-//           if (attempts >= 3) {
-//             alert("Too many failed attempts. You were deleted.");
-//             playing = false;
-//           }
-//         }
-//       }
-//     } else if (choice === "quit") {
-//       alert("Disconnected safely.");
-//       playing = false;
-//     } else if (choice === "help") {
-//       console.log("GOAL: access fragment → bypass code → decryption key → terminal.");
-//       console.log(`You currently have: ${[hasFragment && "access fragment", hasCode && "bypass code", hasKey && "decryption key"].filter(Boolean).join(", ") || "nothing yet"}`);
-//     } else {
-//       console.log("Nothing happens.");
-//     }
-
-//   } else if (room === "firewall") {
-//     console.log("\n--- FIREWALL CHAMBER ---");
-
-//     if (!hasFragment) {
-//       console.log("Blocked by red light. You need an access fragment.");
-//       room = "server";
-//     } else {
-//       console.log("A daemon asks: 'I have keys but no locks, space but no room. What am I?'");
-//       const choice = ask("What do you do? (answer, server, archive, help, quit)");
-
-//       if (choice === "answer") {
-//         const guess = ask("Your answer:");
-//         if (guess === "keyboard") {
-//           hasCode = true;
-//           console.log("Correct! You get a BYPASS CODE.");
-//         } else {
-//           console.log("Wrong. Try again.");
-//         }
-//       } else if (choice === "server" || choice === "archive") {
-//         room = choice;
-//       } else if (choice === "quit") {
-//         alert("Disconnected safely.");
-//         playing = false;
-//       } else if (choice === "help") {
-//         console.log("GOAL: access fragment → bypass code → decryption key → terminal.");
-//         console.log(`You currently have: ${[hasFragment && "access fragment", hasCode && "bypass code", hasKey && "decryption key"].filter(Boolean).join(", ") || "nothing yet"}`);
-//       } else {
-//         console.log("Nothing happens.");
-//       }
-//     }
-
-//   } else if (room === "archive") {
-//     console.log("\n--- BACKUP ARCHIVE ---");
-
-//     const options = hasCode
-//       ? "search, firewall, server, help, quit"
-//       : "firewall, server, help, quit";
-//     console.log(hasCode ? "Vault is open." : "Vault is locked. You need a bypass code.");
-//     const choice = ask(`What do you do? (${options})`);
-
-//     if (choice === "search" && hasCode && !hasKey) {
-//       hasKey = true;
-//       console.log("You find the DECRYPTION KEY!");
-//     } else if (choice === "firewall" || choice === "server") {
-//       room = choice;
-//     } else if (choice === "quit") {
-//       alert("Disconnected safely.");
-//       playing = false;
-//     } else if (choice === "help") {
-//       console.log("GOAL: access fragment → bypass code → decryption key → terminal.");
-//       console.log(`You currently have: ${[hasFragment && "access fragment", hasCode && "bypass code", hasKey && "decryption key"].filter(Boolean).join(", ") || "nothing yet"}`);
-//     } else {
-//       console.log("Nothing happens.");
-//     }
-//   }
-// }
