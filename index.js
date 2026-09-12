@@ -322,6 +322,11 @@ function answerRiddle() {
       "Maybe there is information somewhere in the Server Room."
     );
 
+    alert(
+      "Daemon: \"You do not know my cycle count yet.\"\n\n" +
+      "Maybe there is information somewhere in the Server Room."
+    );
+
     return;
   }
 
@@ -365,6 +370,12 @@ function answerRiddle() {
     );
 
     console.log(
+      "You may try again."
+    );
+
+    alert(
+      "Wrong.\n\n" +
+      "Daemon: \"Your calculations disappoint me.\"\n\n" +
       "You may try again."
     );
   }
