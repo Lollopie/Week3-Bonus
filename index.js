@@ -6,7 +6,6 @@ let attempts = 0;
 let villainDistance = 0;
 let currentRoom = "server";
 let gameRunning = true;
-let ending = "";
 const CATCH_THRESHOLD = 8;
 let cycleCount = Math.floor(Math.random() * 10) + 1;
 let decryptionKey = "alpha" + (Math.floor(Math.random() * 1000) + 1);
@@ -66,7 +65,6 @@ function travelTo(targetRoomName) {
     );
 
     gameRunning = false;
-    ending = "caught";
   }
 }
 
@@ -121,7 +119,6 @@ function quitGame() {
   );
 
   gameRunning = false;
-  ending = "quit";
 }
 
 function serverRoom() {
@@ -616,7 +613,6 @@ function tryTerminal() {
     );
 
     gameRunning = false;
-    ending = "success";
 
     return;
   }
@@ -640,7 +636,6 @@ function tryTerminal() {
     );
 
     gameRunning = false;
-    ending = "deleted";
   } else {
     alert(
       `Wrong key.\n\nAttempts remaining: ${3 - attempts}`
@@ -659,7 +654,6 @@ function gameLoop() {
   cycleCount = Math.floor(Math.random() * 10) + 1;
   decryptionKey = "alpha" + (Math.floor(Math.random() * 1000) + 1);
   gameRunning = true;
-  ending = "";
 
   alert(
     "ESCAPE THE MAINFRAME\n\n" +
