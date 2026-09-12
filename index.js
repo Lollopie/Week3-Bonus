@@ -674,7 +674,7 @@ function gameLoop() {
   ending = "";
 
   alert(
-    "THE CLOUD SERVER\n\n" +
+    "ESCAPE THE MAINFRAME\n\n" +
     "You have been trapped inside ARIA's digital fortress.\n\n" +
 
     "GOAL:\n" +
@@ -693,7 +693,7 @@ function gameLoop() {
   );
 
   console.log("================================");
-  console.log("       THE CLOUD SERVER");
+  console.log("       ESCAPE THE MAINFRAME");
   console.log("================================");
 
   console.log(
@@ -736,7 +736,7 @@ function startGame() {
   }
 
   alert(
-    "Thanks for playing THE CLOUD SERVER!"
+    "Thanks for playing ESCAPE THE MAINFRAME!"
   );
 
   console.log(
